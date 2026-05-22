@@ -41,18 +41,13 @@ export const CertificateBuilder: React.FC = () => {
        if (fontsReady && dataReady) setIsAppReady(true);
     };
 
-    const fontPromises = FONT_OPTIONS.map(opt => {
-       const family = opt.value.split(',')[0].replace(/"/g, '').trim();
-       if (family === 'sans-serif' || family === 'serif') return Promise.resolve();
-       // Force browser to fetch the font
-       return document.fonts.load(`10px "${family}"`).catch(e => console.warn('Font load warning:', family));
-    });
-
-    Promise.all([...fontPromises, document.fonts.ready]).then(() => {
-       setFontsLoaded(true);
-       fontsReady = true;
-       checkReady();
-    });
+    setTimeout(() => {
+       document.fonts.ready.then(() => {
+          setFontsLoaded(true);
+          fontsReady = true;
+          checkReady();
+       });
+    }, 100);
 
     const handlePaste = (e: ClipboardEvent) => {
       const items = e.clipboardData?.items;
@@ -640,6 +635,13 @@ export const CertificateBuilder: React.FC = () => {
          <h2 className="text-2xl font-bold text-slate-800">Đang chuẩn bị không gian làm việc...</h2>
          <p className="text-sm text-slate-500 mt-2 font-medium">Đang tải bộ {FONT_OPTIONS.length} phông chữ mỹ thuật và thiết kế mẫu</p>
          <p className="text-xs text-slate-400 mt-1">(Quá trình này có thể mất vài giây trong lần truy cập đầu tiên)</p>
+         
+         {/* Hidden elements to force browser to download all fonts before canvas rendering */}
+         <div style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', zIndex: -1 }}>
+           {FONT_OPTIONS.map((font, idx) => (
+             <span key={idx} style={{ fontFamily: font.value }}>Font Load</span>
+           ))}
+         </div>
       </div>
     );
   }
