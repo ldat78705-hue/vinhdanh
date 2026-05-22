@@ -166,14 +166,14 @@ export const CertificateBuilder: React.FC = () => {
         blob = await removeBackground(data.avatarDataUrl, {
            publicPath: "https://unpkg.com/@imgly/background-removal-data@1.4.5/dist/",
            model: 'small',
-           device: 'any',
+           device: 'cpu',
         });
       } catch (cdnErr) {
         console.warn('Primary CDN failed, trying fallback...', cdnErr);
         blob = await removeBackground(data.avatarDataUrl, {
            publicPath: "https://esm.sh/@imgly/background-removal-data@1.4.5/dist/",
            model: 'small',
-           device: 'any',
+           device: 'cpu',
         });
       }
       const reader = new FileReader();
@@ -353,7 +353,7 @@ export const CertificateBuilder: React.FC = () => {
     if (!point) return;
 
     if (draggingItem === 'avatar') {
-      setData(prev => ({ ...prev, avatarOverride: { ...(prev.avatarOverride || {}), x: point.x, y: point.y } }));
+      // Di chuyển ảnh học sinh vỡ khung nên tính năng này bị vô hiệu hóa
     } else if (draggingItem === 'logo') {
       setData(prev => ({ ...prev, logoOverride: { ...(prev.logoOverride || {}), x: point.x, y: point.y } }));
     } else if (draggingItem === 'signature') {
@@ -812,19 +812,6 @@ export const CertificateBuilder: React.FC = () => {
                          <span className="text-xs w-8 text-right font-mono">{Math.round(data.avatarScale * 100)}%</span>
                        </div>
                        
-                       <div className="flex items-center gap-3">
-                         <label className="text-xs w-16 text-slate-500">Sang ngang</label>
-                         <input type="range" min="-300" max="300" step="1" value={data.avatarOffsetX} 
-                           onChange={e => handleAvatarSetting('avatarOffsetX', parseFloat(e.target.value))} className="flex-1 accent-blue-600" />
-                         <button onClick={() => handleAvatarSetting('avatarOffsetX', 0)} className="text-xs text-blue-600 hover:underline w-8 text-right">Reset</button>
-                       </div>
-                       
-                       <div className="flex items-center gap-3">
-                         <label className="text-xs w-16 text-slate-500">Lên xuống</label>
-                         <input type="range" min="-300" max="300" step="1" value={data.avatarOffsetY} 
-                           onChange={e => handleAvatarSetting('avatarOffsetY', parseFloat(e.target.value))} className="flex-1 accent-blue-600" />
-                         <button onClick={() => handleAvatarSetting('avatarOffsetY', 0)} className="text-xs text-blue-600 hover:underline w-8 text-right">Reset</button>
-                       </div>
                                                 <div className="mt-4 pt-4 border-t border-slate-200">
                           <button 
                             onClick={handleAIBgRemoval} 
