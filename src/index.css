@@ -7,25 +7,218 @@
   --font-serif: "Playfair Display", serif;
 }
 
-@font-face { font-family: 'FC Chomp'; src: url('/fonts/FC-Chomp.otf'); }
-@font-face { font-family: 'FC Coldwell Bridges'; src: url('/fonts/FC-Coldwell-Bridges.otf'); }
-@font-face { font-family: 'FC Daytonica'; src: url('/fonts/FC-Daytonica.otf'); }
-@font-face { font-family: 'FC Mikado Medium'; src: url('/fonts/FC-Mikado-Medium.otf'); }
-@font-face { font-family: 'HN Kaldista Project'; src: url('/fonts/HN-Kaldista-Project.ttf'); }
-@font-face { font-family: 'MTD Yolanda Princess'; src: url('/fonts/MTD-Yolanda-Princess.otf'); }
-@font-face { font-family: 'SFU Franklin Gothic Book'; src: url('/fonts/SFUFranklinGothicBook.TTF'); }
-@font-face { font-family: 'SFU Franklin Gothic Book Oblique'; src: url('/fonts/SFUFranklinGothicBookOblique.TTF'); }
-@font-face { font-family: 'SFU Franklin Gothic Demi'; src: url('/fonts/SFUFranklinGothicDemi.TTF'); }
-@font-face { font-family: 'SFU Franklin Gothic Demi Oblique'; src: url('/fonts/SFUFranklinGothicDemiOblique.TTF'); }
-@font-face { font-family: 'SFU Franklin Gothic Heavy'; src: url('/fonts/SFUFranklinGothicHeavy.TTF'); }
-@font-face { font-family: 'SVN Hottroof Semhesta'; src: url('/fonts/SVN-Hottroof-Semhesta.otf'); }
-@font-face { font-family: 'TQ Kingston'; src: url('/fonts/TQ-Kingston.ttf'); }
-@font-face { font-family: 'UTM Yves KT'; src: url('/fonts/UTM%20Yves%20KT.ttf'); }
-@font-face { font-family: 'UTM Yves KT Bold'; src: url('/fonts/UTM%20Yves%20KT_Bold.ttf'); }
-@font-face { font-family: 'UTM Yves KT Bold Italic'; src: url('/fonts/UTM%20Yves%20KT_Bold_Italic.ttf'); }
-@font-face { font-family: 'UTM Azkia'; src: url('/fonts/UTM-Azkia.ttf'); }
-@font-face { font-family: 'UTM Candlescript Pro'; src: url('/fonts/UTM-Candlescript-Pro.ttf'); }
-@font-face { font-family: 'UVN Ky Thuat'; src: url('/fonts/UVN-Ky-Thuat.ttf'); }
-@font-face { font-family: 'UVN Thang Vu'; src: url('/fonts/UVN-Thang-Vu.ttf'); }
-@font-face { font-family: 'UVN Thoi Dai 2'; src: url('/fonts/UVN-Thoi-Dai-2.ttf'); }
-@font-face { font-family: 'VNF Shelia Regular'; src: url('/fonts/VNF-Shelia-Regular.ttf'); }
+@font-face { font-family: 'UVNAiCapNang'; src: url('/fonts/UVNAiCapNang.TTF'); }
+@font-face { font-family: 'UVNAiCapNhe'; src: url('/fonts/UVNAiCapNhe.TTF'); }
+@font-face { font-family: 'UVNAiCap B'; src: url('/fonts/UVNAiCap_B.TTF'); }
+@font-face { font-family: 'UVNAiCap R'; src: url('/fonts/UVNAiCap_R.TTF'); }
+@font-face { font-family: 'UVNAnhHaiNhe I'; src: url('/fonts/UVNAnhHaiNhe_I.TTF'); }
+@font-face { font-family: 'UVNAnhHaiNhe R'; src: url('/fonts/UVNAnhHaiNhe_R.TTF'); }
+@font-face { font-family: 'UVNAnhHai B'; src: url('/fonts/UVNAnhHai_B.TTF'); }
+@font-face { font-family: 'UVNAnhHai BI'; src: url('/fonts/UVNAnhHai_BI.TTF'); }
+@font-face { font-family: 'UVNAnhHai I'; src: url('/fonts/UVNAnhHai_I.TTF'); }
+@font-face { font-family: 'UVNAnhHai R'; src: url('/fonts/UVNAnhHai_R.TTF'); }
+@font-face { font-family: 'UVNAnhSang'; src: url('/fonts/UVNAnhSang.TTF'); }
+@font-face { font-family: 'UVNBachDangNang I'; src: url('/fonts/UVNBachDangNang_I.TTF'); }
+@font-face { font-family: 'UVNBachDangNang R'; src: url('/fonts/UVNBachDangNang_R.TTF'); }
+@font-face { font-family: 'UVNBachDang B'; src: url('/fonts/UVNBachDang_B.TTF'); }
+@font-face { font-family: 'UVNBachDang BI'; src: url('/fonts/UVNBachDang_BI.TTF'); }
+@font-face { font-family: 'UVNBachDang I'; src: url('/fonts/UVNBachDang_I.TTF'); }
+@font-face { font-family: 'UVNBachDang R'; src: url('/fonts/UVNBachDang_R.TTF'); }
+@font-face { font-family: 'UVNBachTuyetNang I'; src: url('/fonts/UVNBachTuyetNang_I.TTF'); }
+@font-face { font-family: 'UVNBachTuyetNang R'; src: url('/fonts/UVNBachTuyetNang_R.TTF'); }
+@font-face { font-family: 'UVNBachTuyet B'; src: url('/fonts/UVNBachTuyet_B.TTF'); }
+@font-face { font-family: 'UVNBachTuyet BI'; src: url('/fonts/UVNBachTuyet_BI.TTF'); }
+@font-face { font-family: 'UVNBachTuyet I'; src: url('/fonts/UVNBachTuyet_I.TTF'); }
+@font-face { font-family: 'UVNBachTuyet R'; src: url('/fonts/UVNBachTuyet_R.TTF'); }
+@font-face { font-family: 'UVNBaiHoc B'; src: url('/fonts/UVNBaiHoc_B.TTF'); }
+@font-face { font-family: 'UVNBaiHoc BI'; src: url('/fonts/UVNBaiHoc_BI.TTF'); }
+@font-face { font-family: 'UVNBaiHoc I'; src: url('/fonts/UVNBaiHoc_I.TTF'); }
+@font-face { font-family: 'UVNBaiHoc R'; src: url('/fonts/UVNBaiHoc_R.TTF'); }
+@font-face { font-family: 'UVNBaiSau B'; src: url('/fonts/UVNBaiSau_B.TTF'); }
+@font-face { font-family: 'UVNBaiSau N'; src: url('/fonts/UVNBaiSau_N.TTF'); }
+@font-face { font-family: 'UVNBaiSau Nh'; src: url('/fonts/UVNBaiSau_Nh.TTF'); }
+@font-face { font-family: 'UVNBaiSau R'; src: url('/fonts/UVNBaiSau_R.TTF'); }
+@font-face { font-family: 'UVNBaLe'; src: url('/fonts/UVNBaLe.TTF'); }
+@font-face { font-family: 'UVNBanhMi'; src: url('/fonts/UVNBanhMi.TTF'); }
+@font-face { font-family: 'UVNBanTay'; src: url('/fonts/UVNBanTay.TTF'); }
+@font-face { font-family: 'UVNBayBuomHep B'; src: url('/fonts/UVNBayBuomHep_B.TTF'); }
+@font-face { font-family: 'UVNBayBuomHep N'; src: url('/fonts/UVNBayBuomHep_N.TTF'); }
+@font-face { font-family: 'UVNBayBuomHep R'; src: url('/fonts/UVNBayBuomHep_R.TTF'); }
+@font-face { font-family: 'UVNBayBuom B'; src: url('/fonts/UVNBayBuom_B.TTF'); }
+@font-face { font-family: 'UVNBayBuom N'; src: url('/fonts/UVNBayBuom_N.TTF'); }
+@font-face { font-family: 'UVNBayBuom R'; src: url('/fonts/UVNBayBuom_R.TTF'); }
+@font-face { font-family: 'UVNBenXuan B'; src: url('/fonts/UVNBenXuan_B.TTF'); }
+@font-face { font-family: 'UVNBenXuan R'; src: url('/fonts/UVNBenXuan_R.TTF'); }
+@font-face { font-family: 'UVNBinhDuong'; src: url('/fonts/UVNBinhDuong.TTF'); }
+@font-face { font-family: 'UVNBoQuen'; src: url('/fonts/UVNBoQuen.TTF'); }
+@font-face { font-family: 'UVNBucThu'; src: url('/fonts/UVNBucThu.TTF'); }
+@font-face { font-family: 'UVNBuiDoi'; src: url('/fonts/UVNBuiDoi.TTF'); }
+@font-face { font-family: 'UVNButLong1'; src: url('/fonts/UVNButLong1.TTF'); }
+@font-face { font-family: 'UVNButLong2'; src: url('/fonts/UVNButLong2.TTF'); }
+@font-face { font-family: 'UVNCatBienNhe I'; src: url('/fonts/UVNCatBienNhe_I.TTF'); }
+@font-face { font-family: 'UVNCatBienNhe R'; src: url('/fonts/UVNCatBienNhe_R.TTF'); }
+@font-face { font-family: 'UVNCatBien B'; src: url('/fonts/UVNCatBien_B.TTF'); }
+@font-face { font-family: 'UVNCatBien BI'; src: url('/fonts/UVNCatBien_BI.TTF'); }
+@font-face { font-family: 'UVNCatBien I'; src: url('/fonts/UVNCatBien_I.TTF'); }
+@font-face { font-family: 'UVNCatBien R'; src: url('/fonts/UVNCatBien_R.TTF'); }
+@font-face { font-family: 'UVNChimBienNang'; src: url('/fonts/UVNChimBienNang.TTF'); }
+@font-face { font-family: 'UVNChimBienNhe'; src: url('/fonts/UVNChimBienNhe.TTF'); }
+@font-face { font-family: 'UVNChimBien B'; src: url('/fonts/UVNChimBien_B.TTF'); }
+@font-face { font-family: 'UVNChimBien R'; src: url('/fonts/UVNChimBien_R.TTF'); }
+@font-face { font-family: 'UVNChinhLuan B'; src: url('/fonts/UVNChinhLuan_B.TTF'); }
+@font-face { font-family: 'UVNChinhLuan BI'; src: url('/fonts/UVNChinhLuan_BI.TTF'); }
+@font-face { font-family: 'UVNChinhLuan I'; src: url('/fonts/UVNChinhLuan_I.TTF'); }
+@font-face { font-family: 'UVNChinhLuan R'; src: url('/fonts/UVNChinhLuan_R.TTF'); }
+@font-face { font-family: 'UVNCHUKY'; src: url('/fonts/UVNCHUKY.TTF'); }
+@font-face { font-family: 'UVNCoDien B'; src: url('/fonts/UVNCoDien_B.TTF'); }
+@font-face { font-family: 'UVNCoDien R'; src: url('/fonts/UVNCoDien_R.TTF'); }
+@font-face { font-family: 'UVNConThuy'; src: url('/fonts/UVNConThuy.TTF'); }
+@font-face { font-family: 'UVNDaLat B'; src: url('/fonts/UVNDaLat_B.TTF'); }
+@font-face { font-family: 'UVNDaLat R'; src: url('/fonts/UVNDaLat_R.TTF'); }
+@font-face { font-family: 'UVNDamCuoi H'; src: url('/fonts/UVNDamCuoi_H.TTF'); }
+@font-face { font-family: 'UVNDamCuoi R'; src: url('/fonts/UVNDamCuoi_R.TTF'); }
+@font-face { font-family: 'UVNDinhHon'; src: url('/fonts/UVNDinhHon.TTF'); }
+@font-face { font-family: 'UVNDoiMoi'; src: url('/fonts/UVNDoiMoi.TTF'); }
+@font-face { font-family: 'UVNDungDan'; src: url('/fonts/UVNDungDan.TTF'); }
+@font-face { font-family: 'UVNDzungDakao'; src: url('/fonts/UVNDzungDakao.TTF'); }
+@font-face { font-family: 'UVNGiaDinhHep B'; src: url('/fonts/UVNGiaDinhHep_B.TTF'); }
+@font-face { font-family: 'UVNGiaDinhHep BI'; src: url('/fonts/UVNGiaDinhHep_BI.TTF'); }
+@font-face { font-family: 'UVNGiaDinhHep I'; src: url('/fonts/UVNGiaDinhHep_I.TTF'); }
+@font-face { font-family: 'UVNGiaDinhHep R'; src: url('/fonts/UVNGiaDinhHep_R.TTF'); }
+@font-face { font-family: 'UVNGiaDinh B'; src: url('/fonts/UVNGiaDinh_B.TTF'); }
+@font-face { font-family: 'UVNGiaDinh BI'; src: url('/fonts/UVNGiaDinh_BI.TTF'); }
+@font-face { font-family: 'UVNGiaDinh I'; src: url('/fonts/UVNGiaDinh_I.TTF'); }
+@font-face { font-family: 'UVNGiaDinh R'; src: url('/fonts/UVNGiaDinh_R.TTF'); }
+@font-face { font-family: 'UVNGiayTrang B'; src: url('/fonts/UVNGiayTrang_B.TTF'); }
+@font-face { font-family: 'UVNGiayTrang R'; src: url('/fonts/UVNGiayTrang_R.TTF'); }
+@font-face { font-family: 'UVNGioMayNhe I'; src: url('/fonts/UVNGioMayNhe_I.TTF'); }
+@font-face { font-family: 'UVNGioMayNhe R'; src: url('/fonts/UVNGioMayNhe_R.TTF'); }
+@font-face { font-family: 'UVNGioMay B'; src: url('/fonts/UVNGioMay_B.TTF'); }
+@font-face { font-family: 'UVNGioMay BI'; src: url('/fonts/UVNGioMay_BI.TTF'); }
+@font-face { font-family: 'UVNGioMay I'; src: url('/fonts/UVNGioMay_I.TTF'); }
+@font-face { font-family: 'UVNGioMay R'; src: url('/fonts/UVNGioMay_R.TTF'); }
+@font-face { font-family: 'UVNGiongSong B'; src: url('/fonts/UVNGiongSong_B.TTF'); }
+@font-face { font-family: 'UVNGiongSong BI'; src: url('/fonts/UVNGiongSong_BI.TTF'); }
+@font-face { font-family: 'UVNGiongSong I'; src: url('/fonts/UVNGiongSong_I.TTF'); }
+@font-face { font-family: 'UVNGiongSong R'; src: url('/fonts/UVNGiongSong_R.TTF'); }
+@font-face { font-family: 'UVNHaiBaTrung'; src: url('/fonts/UVNHaiBaTrung.TTF'); }
+@font-face { font-family: 'UVNHaiLong'; src: url('/fonts/UVNHaiLong.TTF'); }
+@font-face { font-family: 'UVNHanViet'; src: url('/fonts/UVNHanViet.TTF'); }
+@font-face { font-family: 'UVNHoaDao'; src: url('/fonts/UVNHoaDao.TTF'); }
+@font-face { font-family: 'UVNHOAKY'; src: url('/fonts/UVNHOAKY.TTF'); }
+@font-face { font-family: 'UVNHoaTay1'; src: url('/fonts/UVNHoaTay1.TTF'); }
+@font-face { font-family: 'UVNHongHaHep B'; src: url('/fonts/UVNHongHaHep_B.TTF'); }
+@font-face { font-family: 'UVNHongHaHep BI'; src: url('/fonts/UVNHongHaHep_BI.TTF'); }
+@font-face { font-family: 'UVNHongHaHep I'; src: url('/fonts/UVNHongHaHep_I.TTF'); }
+@font-face { font-family: 'UVNHongHaHep R'; src: url('/fonts/UVNHongHaHep_R.TTF'); }
+@font-face { font-family: 'UVNHongHa B'; src: url('/fonts/UVNHongHa_B.TTF'); }
+@font-face { font-family: 'UVNHongHa BI'; src: url('/fonts/UVNHongHa_BI.TTF'); }
+@font-face { font-family: 'UVNHongHa I'; src: url('/fonts/UVNHongHa_I.TTF'); }
+@font-face { font-family: 'UVNHongHa R'; src: url('/fonts/UVNHongHa_R.TTF'); }
+@font-face { font-family: 'UVNHuongQue B'; src: url('/fonts/UVNHuongQue_B.TTF'); }
+@font-face { font-family: 'UVNHuongQue N'; src: url('/fonts/UVNHuongQue_N.TTF'); }
+@font-face { font-family: 'UVNHuongQue R'; src: url('/fonts/UVNHuongQue_R.TTF'); }
+@font-face { font-family: 'UVNKeChuyen1'; src: url('/fonts/UVNKeChuyen1.TTF'); }
+@font-face { font-family: 'UVNKeChuyen2'; src: url('/fonts/UVNKeChuyen2.TTF'); }
+@font-face { font-family: 'UVNKeChuyen3'; src: url('/fonts/UVNKeChuyen3.TTF'); }
+@font-face { font-family: 'UVNKieu B'; src: url('/fonts/UVNKieu_B.TTF'); }
+@font-face { font-family: 'UVNKieu R'; src: url('/fonts/UVNKieu_R.TTF'); }
+@font-face { font-family: 'UVNKyThuat'; src: url('/fonts/UVNKyThuat.TTF'); }
+@font-face { font-family: 'UVNLacLongQuan B'; src: url('/fonts/UVNLacLongQuan_B.TTF'); }
+@font-face { font-family: 'UVNLacLongQuan R'; src: url('/fonts/UVNLacLongQuan_R.TTF'); }
+@font-face { font-family: 'UVNLaXanh B'; src: url('/fonts/UVNLaXanh_B.TTF'); }
+@font-face { font-family: 'UVNLaXanh BI'; src: url('/fonts/UVNLaXanh_BI.TTF'); }
+@font-face { font-family: 'UVNLaXanh I'; src: url('/fonts/UVNLaXanh_I.TTF'); }
+@font-face { font-family: 'UVNLaXanh R'; src: url('/fonts/UVNLaXanh_R.TTF'); }
+@font-face { font-family: 'UVNLYDO '; src: url('/fonts/UVNLYDO_.TTF'); }
+@font-face { font-family: 'UVNMangCauNang I'; src: url('/fonts/UVNMangCauNang_I.TTF'); }
+@font-face { font-family: 'UVNMangCauNang R'; src: url('/fonts/UVNMangCauNang_R.TTF'); }
+@font-face { font-family: 'UVNMangCau B'; src: url('/fonts/UVNMangCau_B.TTF'); }
+@font-face { font-family: 'UVNMangCau BI'; src: url('/fonts/UVNMangCau_BI.TTF'); }
+@font-face { font-family: 'UVNMangCau I'; src: url('/fonts/UVNMangCau_I.TTF'); }
+@font-face { font-family: 'UVNMangCau R'; src: url('/fonts/UVNMangCau_R.TTF'); }
+@font-face { font-family: 'UVNMangTre'; src: url('/fonts/UVNMangTre.TTF'); }
+@font-face { font-family: 'UVNMauTim1'; src: url('/fonts/UVNMauTim1.TTF'); }
+@font-face { font-family: 'UVNMauTim2'; src: url('/fonts/UVNMauTim2.TTF'); }
+@font-face { font-family: 'UVNMayChuP B'; src: url('/fonts/UVNMayChuP_B.TTF'); }
+@font-face { font-family: 'UVNMayChuP BI'; src: url('/fonts/UVNMayChuP_BI.TTF'); }
+@font-face { font-family: 'UVNMayChuP I'; src: url('/fonts/UVNMayChuP_I.TTF'); }
+@font-face { font-family: 'UVNMayChuP R'; src: url('/fonts/UVNMayChuP_R.TTF'); }
+@font-face { font-family: 'UVNMinhMap'; src: url('/fonts/UVNMinhMap.TTF'); }
+@font-face { font-family: 'UVNMoiHong'; src: url('/fonts/UVNMoiHong.TTF'); }
+@font-face { font-family: 'UVNMotMoi'; src: url('/fonts/UVNMotMoi.TTF'); }
+@font-face { font-family: 'UVNMuaThu'; src: url('/fonts/UVNMuaThu.TTF'); }
+@font-face { font-family: 'UVNMucCham'; src: url('/fonts/UVNMucCham.TTF'); }
+@font-face { font-family: 'UVNNguyenDu'; src: url('/fonts/UVNNguyenDu.TTF'); }
+@font-face { font-family: 'UVNNhanNang I'; src: url('/fonts/UVNNhanNang_I.TTF'); }
+@font-face { font-family: 'UVNNhanNang R'; src: url('/fonts/UVNNhanNang_R.TTF'); }
+@font-face { font-family: 'UVNNhan B'; src: url('/fonts/UVNNhan_B.TTF'); }
+@font-face { font-family: 'UVNNhan BI'; src: url('/fonts/UVNNhan_BI.TTF'); }
+@font-face { font-family: 'UVNNhan I'; src: url('/fonts/UVNNhan_I.TTF'); }
+@font-face { font-family: 'UVNNhan R'; src: url('/fonts/UVNNhan_R.TTF'); }
+@font-face { font-family: 'UVNNhatKy B'; src: url('/fonts/UVNNhatKy_B.TTF'); }
+@font-face { font-family: 'UVNNhatKy BI'; src: url('/fonts/UVNNhatKy_BI.TTF'); }
+@font-face { font-family: 'UVNNhatKy I'; src: url('/fonts/UVNNhatKy_I.TTF'); }
+@font-face { font-family: 'UVNNhatKy R'; src: url('/fonts/UVNNhatKy_R.TTF'); }
+@font-face { font-family: 'UVNPhuongTay'; src: url('/fonts/UVNPhuongTay.TTF'); }
+@font-face { font-family: 'UVNSachVo B'; src: url('/fonts/UVNSachVo_B.TTF'); }
+@font-face { font-family: 'UVNSachVo BI'; src: url('/fonts/UVNSachVo_BI.TTF'); }
+@font-face { font-family: 'UVNSachVo I'; src: url('/fonts/UVNSachVo_I.TTF'); }
+@font-face { font-family: 'UVNSachVo R'; src: url('/fonts/UVNSachVo_R.TTF'); }
+@font-face { font-family: 'UVNSaigon B'; src: url('/fonts/UVNSaigon_B.TTF'); }
+@font-face { font-family: 'UVNSaigon BI'; src: url('/fonts/UVNSaigon_BI.TTF'); }
+@font-face { font-family: 'UVNSaigon I'; src: url('/fonts/UVNSaigon_I.TTF'); }
+@font-face { font-family: 'UVNSaigon R'; src: url('/fonts/UVNSaigon_R.TTF'); }
+@font-face { font-family: 'UVNSangSong B'; src: url('/fonts/UVNSangSong_B.TTF'); }
+@font-face { font-family: 'UVNSangSong N'; src: url('/fonts/UVNSangSong_N.TTF'); }
+@font-face { font-family: 'UVNSangSong R'; src: url('/fonts/UVNSangSong_R.TTF'); }
+@font-face { font-family: 'UVNThangGieng I'; src: url('/fonts/UVNThangGieng_I.TTF'); }
+@font-face { font-family: 'UVNThangGieng R'; src: url('/fonts/UVNThangGieng_R.TTF'); }
+@font-face { font-family: 'UVNThangVu'; src: url('/fonts/UVNThangVu.TTF'); }
+@font-face { font-family: 'UVNThanhBinh'; src: url('/fonts/UVNThanhBinh.TTF'); }
+@font-face { font-family: 'UVNThanhPhoNang'; src: url('/fonts/UVNThanhPhoNang.TTF'); }
+@font-face { font-family: 'UVNThanhPho B'; src: url('/fonts/UVNThanhPho_B.TTF'); }
+@font-face { font-family: 'UVNThanhPho R'; src: url('/fonts/UVNThanhPho_R.TTF'); }
+@font-face { font-family: 'UVNThayGiaoNang I'; src: url('/fonts/UVNThayGiaoNang_I.TTF'); }
+@font-face { font-family: 'UVNThayGiaoNang R'; src: url('/fonts/UVNThayGiaoNang_R.TTF'); }
+@font-face { font-family: 'UVNThayGiaoNhe I'; src: url('/fonts/UVNThayGiaoNhe_I.TTF'); }
+@font-face { font-family: 'UVNThayGiaoNhe R'; src: url('/fonts/UVNThayGiaoNhe_R.TTF'); }
+@font-face { font-family: 'UVNThayGiao B'; src: url('/fonts/UVNThayGiao_B.TTF'); }
+@font-face { font-family: 'UVNThayGiao BI'; src: url('/fonts/UVNThayGiao_BI.TTF'); }
+@font-face { font-family: 'UVNThayGiao I'; src: url('/fonts/UVNThayGiao_I.TTF'); }
+@font-face { font-family: 'UVNThayGiao R'; src: url('/fonts/UVNThayGiao_R.TTF'); }
+@font-face { font-family: 'UVNThoiDai1'; src: url('/fonts/UVNThoiDai1.TTF'); }
+@font-face { font-family: 'UVNThoiDai2'; src: url('/fonts/UVNThoiDai2.TTF'); }
+@font-face { font-family: 'UVNThoiNayNang I'; src: url('/fonts/UVNThoiNayNang_I.TTF'); }
+@font-face { font-family: 'UVNThoiNayNang R'; src: url('/fonts/UVNThoiNayNang_R.TTF'); }
+@font-face { font-family: 'UVNThoiNay B'; src: url('/fonts/UVNThoiNay_B.TTF'); }
+@font-face { font-family: 'UVNThoiNay BI'; src: url('/fonts/UVNThoiNay_BI.TTF'); }
+@font-face { font-family: 'UVNThoiNay I'; src: url('/fonts/UVNThoiNay_I.TTF'); }
+@font-face { font-family: 'UVNThoiNay R'; src: url('/fonts/UVNThoiNay_R.TTF'); }
+@font-face { font-family: 'UVNThuTu'; src: url('/fonts/UVNThuTu.TTF'); }
+@font-face { font-family: 'UVNTinTucHepThem B'; src: url('/fonts/UVNTinTucHepThem_B.TTF'); }
+@font-face { font-family: 'UVNTinTucHepThem R'; src: url('/fonts/UVNTinTucHepThem_R.TTF'); }
+@font-face { font-family: 'UVNTinTucHep B'; src: url('/fonts/UVNTinTucHep_B.TTF'); }
+@font-face { font-family: 'UVNTinTucHep BI'; src: url('/fonts/UVNTinTucHep_BI.TTF'); }
+@font-face { font-family: 'UVNTinTucHep I'; src: url('/fonts/UVNTinTucHep_I.TTF'); }
+@font-face { font-family: 'UVNTinTucHep R'; src: url('/fonts/UVNTinTucHep_R.TTF'); }
+@font-face { font-family: 'UVNTinTucNhe I'; src: url('/fonts/UVNTinTucNhe_I.TTF'); }
+@font-face { font-family: 'UVNTinTucNhe R'; src: url('/fonts/UVNTinTucNhe_R.TTF'); }
+@font-face { font-family: 'UVNTinTuc B'; src: url('/fonts/UVNTinTuc_B.TTF'); }
+@font-face { font-family: 'UVNTinTuc BI'; src: url('/fonts/UVNTinTuc_BI.TTF'); }
+@font-face { font-family: 'UVNTinTuc I'; src: url('/fonts/UVNTinTuc_I.TTF'); }
+@font-face { font-family: 'UVNTinTuc R'; src: url('/fonts/UVNTinTuc_R.TTF'); }
+@font-face { font-family: 'UVNVanChuongNang R'; src: url('/fonts/UVNVanChuongNang_R.TTF'); }
+@font-face { font-family: 'UVNVanChuong B'; src: url('/fonts/UVNVanChuong_B.TTF'); }
+@font-face { font-family: 'UVNVanChuong I'; src: url('/fonts/UVNVanChuong_I.TTF'); }
+@font-face { font-family: 'UVNVanChuong R'; src: url('/fonts/UVNVanChuong_R.TTF'); }
+@font-face { font-family: 'UVNVan B'; src: url('/fonts/UVNVan_B.TTF'); }
+@font-face { font-family: 'UVNVan R'; src: url('/fonts/UVNVan_R.TTF'); }
+@font-face { font-family: 'UVNVienDu'; src: url('/fonts/UVNVienDu.TTF'); }
+@font-face { font-family: 'UVNVietSach B'; src: url('/fonts/UVNVietSach_B.TTF'); }
+@font-face { font-family: 'UVNVietSach BI'; src: url('/fonts/UVNVietSach_BI.TTF'); }
+@font-face { font-family: 'UVNVietSach I'; src: url('/fonts/UVNVietSach_I.TTF'); }
+@font-face { font-family: 'UVNVietSach R'; src: url('/fonts/UVNVietSach_R.TTF'); }
+@font-face { font-family: 'UVNViVi'; src: url('/fonts/UVNViVi.TTF'); }
+@font-face { font-family: 'UVNVungTau'; src: url('/fonts/UVNVungTau.TTF'); }
+
