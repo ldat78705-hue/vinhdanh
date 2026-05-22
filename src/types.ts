@@ -7,6 +7,8 @@ export interface TextConfig {
   weight: 'normal' | 'bold' | 'lighter' | string;
   fontStyle?: 'normal' | 'italic';
   fontFamily: string;
+  effect?: 'none' | 'gold' | 'glow' | 'emboss' | 'longShadow' | 'stroke' | 'curved' | 'gradient' | 'glitter';
+  effectColor?: string;
 }
 
 export interface AvatarConfig {
@@ -59,6 +61,8 @@ export interface FieldStyleOverride {
   y?: number;
   weight?: 'normal' | 'bold' | 'lighter' | string;
   fontStyle?: 'normal' | 'italic';
+  effect?: 'none' | 'gold' | 'glow' | 'emboss' | 'longShadow' | 'stroke' | 'curved' | 'gradient' | 'glitter';
+  effectColor?: string;
 }
 
 export interface CertificateData {

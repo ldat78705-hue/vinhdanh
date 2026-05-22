@@ -375,7 +375,7 @@ export const CertificateBuilder: React.FC = () => {
       const fontSize = overrides.fontSize ?? baseConfig.fontSize;
       
       // Approximation of bounding box
-      const width = 600; // rough width
+      const width = data[key].length * fontSize * 0.6; // Improved width estimation
       const height = fontSize * 1.5;
       
       let boxX = x;
@@ -1076,6 +1076,38 @@ export const CertificateBuilder: React.FC = () => {
                     >
                       I
                     </button>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Hiệu ứng chữ</label>
+                    <select 
+                      className="w-full border border-slate-300 rounded-lg p-2 bg-white"
+                      value={data.styleOverrides?.[editingField]?.effect || currentTemplate?.texts[editingField]?.effect || 'none'}
+                      onChange={e => handleStyleOverride(editingField, 'effect', e.target.value)}
+                    >
+                      <option value="none">Không có</option>
+                      <option value="gold">Mạ Vàng (Gold Metallic)</option>
+                      <option value="glow">Phát Sáng (Glow / Neon)</option>
+                      <option value="emboss">Dập Nổi 3D (Emboss)</option>
+                      <option value="longShadow">Đổ Bóng Dài (Long Shadow)</option>
+                      <option value="stroke">Chữ Viền (Stroke)</option>
+                      <option value="curved">Chữ Cong (Curved)</option>
+                      <option value="glitter">Lấp Lánh (Glitter)</option>
+                      <option value="gradient">Gradient 2 Màu</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Màu hiệu ứng phụ</label>
+                    <div className="flex items-center gap-2">
+                      <input 
+                        type="color" 
+                        className="h-10 w-full border border-slate-300 rounded-lg p-1 cursor-pointer bg-white"
+                        value={data.styleOverrides?.[editingField]?.effectColor || currentTemplate?.texts[editingField]?.effectColor || '#ffffff'}
+                        onChange={e => handleStyleOverride(editingField, 'effectColor', e.target.value)}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

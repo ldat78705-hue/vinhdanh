@@ -183,14 +183,113 @@ export const renderCertificateToCanvas = async (
     const drawY = overrides.y ?? config.y;
 
     ctx.font = `${fontStyle} ${weight} ${fontSize}px ${fontFamily}`;
-    ctx.fillStyle = color;
     ctx.textAlign = config.align;
     ctx.textBaseline = 'middle';
     
+    const effect = overrides.effect || config.effect || 'none';
+    const effectColor = overrides.effectColor || config.effectColor || '#ffffff';
+
     // Simple line break support if using \n
     const lines = value.split('\n');
     lines.forEach((line, index) => {
-      ctx.fillText(line, drawX, drawY + (index * fontSize * 1.2));
+      const yPos = drawY + (index * fontSize * 1.2);
+      ctx.save();
+      
+      if (effect === 'gold') {
+         const metrics = ctx.measureText(line);
+         const w = metrics.width;
+         const startX = config.align === 'center' ? drawX - w/2 : config.align === 'right' ? drawX - w : drawX;
+         const grad = ctx.createLinearGradient(startX, yPos - fontSize/2, startX, yPos + fontSize/2);
+         grad.addColorStop(0, '#BF953F');
+         grad.addColorStop(0.25, '#FCF6BA');
+         grad.addColorStop(0.5, '#b38728');
+         grad.addColorStop(0.75, '#fbf5b7');
+         grad.addColorStop(1, '#AA771C');
+         ctx.fillStyle = grad;
+         ctx.shadowColor = 'rgba(0,0,0,0.3)';
+         ctx.shadowBlur = 4;
+         ctx.shadowOffsetY = 2;
+         ctx.fillText(line, drawX, yPos);
+         ctx.strokeStyle = effectColor;
+         ctx.lineWidth = Math.max(1, fontSize * 0.02);
+         ctx.strokeText(line, drawX, yPos);
+      } else if (effect === 'glow') {
+         ctx.shadowColor = effectColor;
+         ctx.shadowBlur = Math.max(10, fontSize * 0.3);
+         ctx.fillStyle = color;
+         ctx.fillText(line, drawX, yPos);
+         ctx.fillText(line, drawX, yPos); // double for strength
+      } else if (effect === 'emboss') {
+         ctx.fillStyle = 'rgba(255,255,255,0.7)';
+         ctx.fillText(line, drawX - 2, yPos - 2);
+         ctx.fillStyle = 'rgba(0,0,0,0.5)';
+         ctx.fillText(line, drawX + 2, yPos + 2);
+         ctx.fillStyle = color;
+         ctx.fillText(line, drawX, yPos);
+      } else if (effect === 'longShadow') {
+         ctx.fillStyle = effectColor;
+         for(let i=0; i<Math.min(30, fontSize); i++) {
+            ctx.fillText(line, drawX + i, yPos + i);
+         }
+         ctx.fillStyle = color;
+         ctx.fillText(line, drawX, yPos);
+      } else if (effect === 'stroke') {
+         ctx.strokeStyle = color;
+         ctx.lineWidth = Math.max(2, fontSize * 0.05);
+         ctx.strokeText(line, drawX, yPos);
+         ctx.fillStyle = effectColor; 
+         ctx.fillText(line, drawX, yPos);
+      } else if (effect === 'gradient') {
+         const metrics = ctx.measureText(line);
+         const w = metrics.width;
+         const startX = config.align === 'center' ? drawX - w/2 : config.align === 'right' ? drawX - w : drawX;
+         const grad = ctx.createLinearGradient(startX, yPos, startX + w, yPos);
+         grad.addColorStop(0, color);
+         grad.addColorStop(1, effectColor);
+         ctx.fillStyle = grad;
+         ctx.fillText(line, drawX, yPos);
+      } else if (effect === 'curved') {
+         ctx.fillStyle = color;
+         const metrics = ctx.measureText(line);
+         const radius = Math.max(metrics.width * 0.8, fontSize * 2);
+         const angleSpan = metrics.width / radius;
+         
+         ctx.save();
+         ctx.translate(drawX, yPos + radius);
+         ctx.rotate(-angleSpan / 2);
+         
+         let currentAngle = 0;
+         for(let i = 0; i < line.length; i++) {
+            const char = line[i];
+            const charWidth = ctx.measureText(char).width;
+            ctx.save();
+            ctx.rotate(currentAngle + (charWidth / radius) / 2);
+            ctx.fillText(char, 0, -radius);
+            ctx.restore();
+            currentAngle += charWidth / radius;
+         }
+         ctx.restore();
+      } else if (effect === 'glitter') {
+         ctx.fillStyle = color;
+         ctx.fillText(line, drawX, yPos);
+         
+         ctx.fillStyle = effectColor;
+         const metrics = ctx.measureText(line);
+         const w = metrics.width;
+         const startX = config.align === 'center' ? drawX - w/2 : config.align === 'right' ? drawX - w : drawX;
+         for(let i=0; i<7; i++){
+             const px = startX + Math.random() * w;
+             const py = yPos - fontSize/2 + Math.random() * fontSize;
+             ctx.beginPath();
+             ctx.arc(px, py, Math.max(1, fontSize * 0.04), 0, Math.PI*2);
+             ctx.fill();
+         }
+      } else {
+         ctx.fillStyle = color;
+         ctx.fillText(line, drawX, yPos);
+      }
+      
+      ctx.restore();
     });
   });
 
