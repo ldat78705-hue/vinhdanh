@@ -161,7 +161,10 @@ export const CertificateBuilder: React.FC = () => {
     if (!data.avatarDataUrl) return;
     setIsRemovingBg(true);
     try {
-      const blob = await removeBackground(data.avatarDataUrl);
+      const blob = await removeBackground(data.avatarDataUrl, {
+         model: 'small',
+         device: 'any',
+      });
       const reader = new FileReader();
       reader.readAsDataURL(blob);
       reader.onloadend = () => {
@@ -174,7 +177,7 @@ export const CertificateBuilder: React.FC = () => {
       };
     } catch(e) {
       console.error(e);
-      alert('Có lỗi xảy ra khi xóa nền.');
+      alert('Có lỗi xảy ra khi xóa nền (có thể do kết nối mạng yếu trên điện thoại). Vui lòng thử lại.');
       setIsRemovingBg(false);
     }
   };
@@ -551,9 +554,9 @@ export const CertificateBuilder: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col-reverse lg:flex-row h-full text-slate-800">
-       <div className="w-full md:w-80 lg:w-96 shrink-0 bg-white border-r border-slate-200 flex flex-col h-[50vh] md:h-full z-20">
-          <div className="p-4 sm:p-6 pb-4 border-b border-slate-100 z-20 bg-white shrink-0">
+    <div className="flex flex-col-reverse lg:flex-row h-[100dvh] text-slate-800">
+       <div className="w-full md:w-80 lg:w-96 shrink-0 bg-white border-r border-slate-200 flex flex-col h-[45vh] lg:h-full z-20">
+          <div className="p-3 sm:p-6 pb-3 border-b border-slate-100 z-20 bg-white shrink-0">
                           <div className="flex items-center justify-between mb-2">
                <h2 className="text-xl font-bold text-slate-800">Tạo Chứng Nhận</h2>
                <button onClick={() => setShowBatchModal(true)} className="flex items-center gap-1 text-xs bg-green-50 text-green-700 px-2 py-1 rounded border border-green-200 hover:bg-green-100 transition">
@@ -855,11 +858,11 @@ export const CertificateBuilder: React.FC = () => {
        </div>
 
        {/* Right sidebar - Live Preview */}
-       <div className="flex-1 bg-slate-100 flex flex-col p-4 md:p-8 relative h-[50vh] lg:h-full overflow-hidden">
-           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 shrink-0 gap-4">
-             <div>
+       <div className="flex-1 bg-slate-100 flex flex-col p-2 sm:p-4 md:p-8 relative h-[55vh] lg:h-full overflow-hidden">
+           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 sm:mb-6 shrink-0 gap-2 sm:gap-4">
+             <div className="hidden sm:block">
                 <h2 className="text-lg md:text-2xl font-bold text-slate-800">Live Preview</h2>
-                <p className="text-slate-500 text-xs md:text-sm hidden sm:block">Hiển thị trực tiếp kết quả. Resize tự động theo màn hình.</p>
+                <p className="text-slate-500 text-xs md:text-sm">Hiển thị trực tiếp kết quả. Resize tự động theo màn hình.</p>
              </div>
              
              <div className="flex gap-2 w-full sm:w-auto">
@@ -869,40 +872,40 @@ export const CertificateBuilder: React.FC = () => {
                      setData(prev => ({ ...prev, styleOverrides: {}, avatarOverride: undefined, logoOverride: undefined, signatureOverride: undefined }));
                    }
                  }}
-                 className="bg-white hover:bg-slate-50 text-slate-600 px-3 py-2 md:py-3 rounded-xl font-medium transition active:scale-95 flex-1 sm:flex-none justify-center text-sm md:text-base border border-slate-300"
+                 className="bg-white hover:bg-slate-50 text-slate-600 px-2 py-1.5 md:px-3 md:py-3 rounded md:rounded-xl font-medium transition active:scale-95 flex-1 sm:flex-none justify-center text-xs md:text-base border border-slate-300"
                >
                  Khôi phục
                </button>
                <button 
                  onClick={handleSaveState}
-                 className="bg-slate-200 hover:bg-slate-300 text-slate-800 px-4 py-2 md:py-3 rounded-xl font-bold transition active:scale-95 flex-1 sm:flex-none justify-center text-sm md:text-base border border-slate-300"
+                 className="bg-slate-200 hover:bg-slate-300 text-slate-800 px-3 py-1.5 md:px-4 md:py-3 rounded md:rounded-xl font-bold transition active:scale-95 flex-1 sm:flex-none justify-center text-xs md:text-base border border-slate-300"
                >
                  Lưu Mẫu
                </button>
                {currentBatchIndex >= 0 ? (
-                  <button onClick={handleNextBatch} className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-4 md:px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-lg transition active:scale-95">
-                    <Download size={18} />
-                    <span>Lưu & Tới em tiếp theo</span>
+                  <button onClick={handleNextBatch} className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-3 py-1.5 md:px-6 md:py-2.5 rounded md:rounded-xl font-bold flex items-center justify-center gap-1 sm:gap-2 shadow-lg transition active:scale-95 text-xs md:text-base flex-1">
+                    <Download size={14} className="sm:w-[18px] sm:h-[18px]" />
+                    <span>Lưu & Tới</span>
                   </button>
                ) : (
-                  <div className="flex gap-2">
-                    <button onClick={handleDownload} className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-3 md:px-4 py-2 md:py-3 rounded-xl font-bold shadow-lg shadow-blue-500/30 flex items-center gap-2 transition active:scale-95 text-sm md:text-base border border-blue-500">
-                      <Download size={18} /> <span className="hidden sm:inline">Tải Ảnh</span> PNG
+                  <div className="flex gap-2 flex-1 sm:flex-none">
+                    <button onClick={handleDownload} className="flex-1 sm:flex-none justify-center bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-2 py-1.5 md:px-4 md:py-3 rounded md:rounded-xl font-bold shadow-md md:shadow-lg flex items-center gap-1 md:gap-2 transition active:scale-95 text-xs md:text-base border border-blue-500">
+                      <Download size={14} className="sm:w-[18px] sm:h-[18px]" /> <span className="hidden sm:inline">Tải Ảnh</span> PNG
                     </button>
-                    <button onClick={handleDownloadPDF} className="bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white px-3 md:px-4 py-2 md:py-3 rounded-xl font-bold shadow-lg shadow-red-500/30 flex items-center gap-2 transition active:scale-95 text-sm md:text-base border border-red-500">
-                      <Download size={18} /> <span className="hidden sm:inline">Tải Bản In</span> PDF
+                    <button onClick={handleDownloadPDF} className="flex-1 sm:flex-none justify-center bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white px-2 py-1.5 md:px-4 md:py-3 rounded md:rounded-xl font-bold shadow-md md:shadow-lg flex items-center gap-1 md:gap-2 transition active:scale-95 text-xs md:text-base border border-red-500">
+                      <Download size={14} className="sm:w-[18px] sm:h-[18px]" /> <span className="hidden sm:inline">Tải Bản In</span> PDF
                     </button>
                   </div>
                )}
              </div>
            </div>
 
-           <div className="bg-blue-50 text-blue-800 text-xs md:text-sm px-4 py-3 rounded-xl mb-4 border border-blue-200 flex items-center gap-2">
-              <span className="text-lg">💡</span> 
-              <span><b>Mẹo cho người mới:</b> Bạn có thể <b>click trực tiếp</b> vào các dòng chữ hoặc ảnh thẻ trên khung ảnh bên dưới để chỉnh sửa, và <b>kéo thả</b> để di chuyển chúng!</span>
+           <div className="bg-blue-50 text-blue-800 text-[10px] md:text-sm px-2 py-1.5 md:px-4 md:py-3 rounded md:rounded-xl mb-2 md:mb-4 border border-blue-200 flex items-start sm:items-center gap-1 md:gap-2">
+              <span className="text-base sm:text-lg shrink-0">💡</span> 
+              <span className="leading-tight"><b>Mẹo:</b> <b>Click</b> vào chữ/ảnh thẻ để sửa, <b>kéo thả</b> để di chuyển!</span>
            </div>
 
-           <div className="flex-1 w-full bg-slate-200 border border-slate-300 shadow-inner rounded-2xl md:rounded-3xl overflow-auto flex items-center justify-center p-2 sm:p-4 md:p-8 relative">
+           <div className="flex-1 w-full bg-slate-200 border border-slate-300 shadow-inner rounded-xl md:rounded-3xl overflow-hidden flex items-center justify-center p-0 md:p-8 relative">
               <div className="w-full h-full relative flex items-center justify-center">
                  <canvas 
                     ref={canvasRef} 
