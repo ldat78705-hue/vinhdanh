@@ -16,7 +16,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="h-screen w-screen flex flex-col overflow-hidden bg-slate-50 text-slate-900 font-sans">
+    <div className="min-h-[100dvh] w-full flex flex-col bg-slate-50 text-slate-900 font-sans lg:h-screen lg:overflow-hidden">
       {/* Invisible font loader to ensure canvas has access to all custom fonts immediately */}
       <div style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', zIndex: -100 }}>
          {FONT_OPTIONS.map(font => (
@@ -24,7 +24,7 @@ export default function App() {
          ))}
       </div>
 
-      <header className="h-14 sm:h-16 shrink-0 border-b border-slate-200 bg-white/80 backdrop-blur-md flex items-center px-4 sm:px-6 shadow-sm z-20 justify-between relative">
+      <header className="h-14 sm:h-16 shrink-0 border-b border-slate-200 bg-white/80 backdrop-blur-md flex items-center px-4 sm:px-6 shadow-sm z-20 justify-between relative sticky top-0">
         <div className="flex items-center gap-2 sm:gap-3">
           <motion.div 
             whileHover={{ scale: 1.05, rotate: 5 }}
@@ -60,7 +60,7 @@ export default function App() {
         </div>
       </header>
 
-      <main className="flex-1 overflow-hidden relative">
+      <main className="flex-1 relative flex flex-col lg:overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={tab}
