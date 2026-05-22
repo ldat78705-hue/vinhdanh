@@ -1,0 +1,6 @@
+{
+  "name": "Certificate Generator",
+  "description": "Student Recognition Certificates generator with customizable templates and automatic alignment.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
