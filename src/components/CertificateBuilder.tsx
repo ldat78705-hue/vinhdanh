@@ -1,4 +1,4 @@
-import { env, AutoModel, AutoProcessor, RawImage } from '@xenova/transformers';
+import { removeBackground, preload } from '@imgly/background-removal';
 import React, { useState, useEffect, useRef } from 'react';
 import { TemplateConfig, CertificateData, TextKeys, FieldStyleOverride, BatchStudent } from '../types';
 import { getTemplates, seedDefaultTemplates, saveTemplate } from '../lib/db';
@@ -9,8 +9,7 @@ import { Download, Upload, Image as ImageIcon, Eye, EyeOff, Settings2, X, Users,
 import { jsPDF } from 'jspdf';
 import { motion, AnimatePresence } from 'motion/react';
 
-let _model: any = null;
-let _processor: any = null;
+let _imglyConfig: any = null;
 
 export const CertificateBuilder: React.FC = () => {
   const [templates, setTemplates] = useState<TemplateConfig[]>([]);
@@ -186,34 +185,27 @@ export const CertificateBuilder: React.FC = () => {
   const [isRemovingBg, setIsRemovingBg] = useState(false);
 
   const initAI = async () => {
-    if (_model && _processor) {
-      setAiLoadingState('ready');
-      return;
-    }
+    if (aiLoadingState === 'ready') return;
     
     try {
       setAiLoadingState('loading');
       setAiProgress(0);
-      setAiStatusMessage('Đang kết nối đến máy chủ AI...');
+      setAiStatusMessage('Đang kết nối hệ thống AI...');
 
-      env.allowLocalModels = false;
-      env.useBrowserCache = true;
+      _imglyConfig = {
+         publicPath: "https://unpkg.com/@imgly/background-removal-data@1.4.5/dist/",
+         model: "medium", // Sử dụng model thông minh nhất (rmbg-1.4)
+         device: "wasm",  // Ép buộc dùng WebAssembly CPU để không gây sập WebGL trên điện thoại
+         progress: (key: string, current: number, total: number) => {
+           if (key.includes('fetch')) {
+             const p = Math.round((current / total) * 100);
+             setAiProgress(p);
+             setAiStatusMessage(`Đang tải lõi xử lý AI (${p}%)`);
+           }
+         }
+      };
 
-      _model = await AutoModel.from_pretrained('onnx-community/BiRefNet_lite-ONNX', {
-        progress_callback: (data: any) => {
-          if (data.status === 'progress') {
-             setAiProgress(Math.round(data.progress));
-             setAiStatusMessage(`Đang tải lõi xử lý AI (${Math.round(data.progress)}%)`);
-          } else if (data.status === 'init') {
-             setAiStatusMessage('Đang khởi tạo mô hình...');
-          } else if (data.status === 'ready') {
-             setAiStatusMessage('Mô hình đã sẵn sàng!');
-          }
-        }
-      });
-      
-      setAiStatusMessage('Đang tải bộ tiền xử lý...');
-      _processor = await AutoProcessor.from_pretrained('onnx-community/BiRefNet_lite-ONNX');
+      await preload(_imglyConfig);
       
       setAiLoadingState('ready');
     } catch (err) {
@@ -224,32 +216,10 @@ export const CertificateBuilder: React.FC = () => {
   };
 
   const handleAIBgRemoval = async () => {
-    if (!data.avatarDataUrl || !_model || !_processor) return;
+    if (!data.avatarDataUrl || !_imglyConfig) return;
     setIsRemovingBg(true);
     try {
-      const image = await RawImage.fromURL(data.avatarDataUrl);
-      const { pixel_values } = await _processor(image);
-      const { output } = await _model({ input: pixel_values });
-
-      const mask = await RawImage.fromTensor(output[0].mul(255).to('uint8')).resize(image.width, image.height);
-
-      const canvas = document.createElement('canvas');
-      canvas.width = image.width;
-      canvas.height = image.height;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) throw new Error("Could not get 2d context");
-      
-      ctx.drawImage(image.toCanvas(), 0, 0);
-
-      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const maskData = mask.data;
-      for (let i = 0; i < maskData.length; ++i) {
-          imgData.data[i * 4 + 3] = maskData[i];
-      }
-      ctx.putImageData(imgData, 0, 0);
-
-      const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/png'));
-      if (!blob) throw new Error("Blob conversion failed");
+      const blob = await removeBackground(data.avatarDataUrl, _imglyConfig);
       
       const reader = new FileReader();
       reader.readAsDataURL(blob);
