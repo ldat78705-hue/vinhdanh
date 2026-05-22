@@ -73,7 +73,7 @@ const createDefaultText = (
 });
 
 export const seedDefaultTemplates = async () => {
-  const seeded = localStorage.getItem('hasSeededDefaults_v3');
+  const seeded = localStorage.getItem('hasSeededDefaults_v4');
   if (seeded) return;
   
   try {
@@ -82,7 +82,7 @@ export const seedDefaultTemplates = async () => {
     for (const t of templates) {
       await saveTemplate(t);
     }
-    localStorage.setItem('hasSeededDefaults_v3', 'true');
+    localStorage.setItem('hasSeededDefaults_v4', 'true');
   } catch (err) {
     console.error('Failed to load default templates', err);
   }
