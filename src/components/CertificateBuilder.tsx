@@ -177,7 +177,7 @@ export const CertificateBuilder: React.FC = () => {
       env.allowLocalModels = false;
       env.useBrowserCache = true;
 
-      _model = await AutoModel.from_pretrained('Xenova/rmbg-1.4', {
+      _model = await AutoModel.from_pretrained('Xenova/modnet', {
         progress_callback: (data: any) => {
           if (data.status === 'progress') {
              setAiProgress(Math.round(data.progress));
@@ -191,7 +191,7 @@ export const CertificateBuilder: React.FC = () => {
       });
       
       setAiStatusMessage('Đang tải bộ tiền xử lý...');
-      _processor = await AutoProcessor.from_pretrained('Xenova/rmbg-1.4');
+      _processor = await AutoProcessor.from_pretrained('Xenova/modnet');
       
       setAiLoadingState('ready');
     } catch (err) {
