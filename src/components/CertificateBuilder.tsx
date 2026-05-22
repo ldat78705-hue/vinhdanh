@@ -1,4 +1,4 @@
-import { removeBackground } from '@imgly/background-removal';
+import { env, AutoModel, AutoProcessor, RawImage } from '@xenova/transformers';
 import React, { useState, useEffect, useRef } from 'react';
 import { TemplateConfig, CertificateData, TextKeys, FieldStyleOverride, BatchStudent } from '../types';
 import { getTemplates, seedDefaultTemplates, saveTemplate } from '../lib/db';
@@ -9,8 +9,14 @@ import { Download, Upload, Image as ImageIcon, Eye, EyeOff, Settings2, X, Users,
 import { jsPDF } from 'jspdf';
 import { motion, AnimatePresence } from 'motion/react';
 
+let _model: any = null;
+let _processor: any = null;
+
 export const CertificateBuilder: React.FC = () => {
   const [templates, setTemplates] = useState<TemplateConfig[]>([]);
+  const [aiLoadingState, setAiLoadingState] = useState<'idle' | 'loading' | 'ready'>('idle');
+  const [aiProgress, setAiProgress] = useState(0);
+  const [aiStatusMessage, setAiStatusMessage] = useState('Hệ thống đang tải bộ xử lý AI (khoảng 100MB)...');
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>('');
   const [openStyleField, setOpenStyleField] = useState<TextKeys | null>(null);
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -157,25 +163,72 @@ export const CertificateBuilder: React.FC = () => {
   const [draggingItem, setDraggingItem] = useState<'avatar' | 'logo' | 'signature' | TextKeys | null>(null);
   const [isRemovingBg, setIsRemovingBg] = useState(false);
 
+  const initAI = async () => {
+    if (_model && _processor) {
+      setAiLoadingState('ready');
+      return;
+    }
+    
+    try {
+      setAiLoadingState('loading');
+      setAiProgress(0);
+      setAiStatusMessage('Đang kết nối đến máy chủ AI...');
+
+      env.allowLocalModels = false;
+      env.useBrowserCache = true;
+
+      _model = await AutoModel.from_pretrained('Xenova/rmbg-1.4', {
+        progress_callback: (data: any) => {
+          if (data.status === 'progress') {
+             setAiProgress(Math.round(data.progress));
+             setAiStatusMessage(`Đang tải lõi xử lý AI (${Math.round(data.progress)}%)`);
+          } else if (data.status === 'init') {
+             setAiStatusMessage('Đang khởi tạo mô hình...');
+          } else if (data.status === 'ready') {
+             setAiStatusMessage('Mô hình đã sẵn sàng!');
+          }
+        }
+      });
+      
+      setAiStatusMessage('Đang tải bộ tiền xử lý...');
+      _processor = await AutoProcessor.from_pretrained('Xenova/rmbg-1.4');
+      
+      setAiLoadingState('ready');
+    } catch (err) {
+      console.error("AI Initialization error:", err);
+      setAiLoadingState('idle');
+      alert("Không thể tải hệ thống AI. Vui lòng kiểm tra lại kết nối mạng!");
+    }
+  };
+
   const handleAIBgRemoval = async () => {
-    if (!data.avatarDataUrl) return;
+    if (!data.avatarDataUrl || !_model || !_processor) return;
     setIsRemovingBg(true);
     try {
-      let blob: Blob;
-      try {
-        blob = await removeBackground(data.avatarDataUrl, {
-           publicPath: "https://unpkg.com/@imgly/background-removal-data@1.4.5/dist/",
-           model: 'small',
-           device: 'cpu',
-        });
-      } catch (cdnErr) {
-        console.warn('Primary CDN failed, trying fallback...', cdnErr);
-        blob = await removeBackground(data.avatarDataUrl, {
-           publicPath: "https://esm.sh/@imgly/background-removal-data@1.4.5/dist/",
-           model: 'small',
-           device: 'cpu',
-        });
+      const image = await RawImage.fromURL(data.avatarDataUrl);
+      const { pixel_values } = await _processor(image);
+      const { output } = await _model({ input: pixel_values });
+
+      const mask = await RawImage.fromTensor(output[0].mul(255).to('uint8')).resize(image.width, image.height);
+
+      const canvas = document.createElement('canvas');
+      canvas.width = image.width;
+      canvas.height = image.height;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error("Could not get 2d context");
+      
+      ctx.drawImage(image.toCanvas(), 0, 0);
+
+      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const maskData = mask.data;
+      for (let i = 0; i < maskData.length; ++i) {
+          imgData.data[i * 4 + 3] = maskData[i];
       }
+      ctx.putImageData(imgData, 0, 0);
+
+      const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/png'));
+      if (!blob) throw new Error("Blob conversion failed");
+      
       const reader = new FileReader();
       reader.readAsDataURL(blob);
       reader.onloadend = () => {
@@ -188,7 +241,7 @@ export const CertificateBuilder: React.FC = () => {
       };
     } catch(e) {
       console.error(e);
-      alert('Tính năng xóa nền AI yêu cầu tải tệp xử lý đồ họa (~10MB) từ máy chủ. Lỗi này thường do mạng di động yếu hoặc trình duyệt của điện thoại không hỗ trợ WebGL/WASM.\n\nVui lòng thử lại với mạng Wifi ổn định hơn, hoặc sử dụng MÁY TÍNH để xóa nền mượt mà nhất!');
+      alert('Có lỗi trong quá trình xử lý xóa nền. Vui lòng thử lại!');
       setIsRemovingBg(false);
     }
   };
@@ -812,34 +865,63 @@ export const CertificateBuilder: React.FC = () => {
                          <span className="text-xs w-8 text-right font-mono">{Math.round(data.avatarScale * 100)}%</span>
                        </div>
                        
-                                                <div className="mt-4 pt-4 border-t border-slate-200">
-                          <button 
-                            onClick={handleAIBgRemoval} 
-                            disabled={isRemovingBg}
-                            className={`w-full py-2 px-3 rounded-lg flex items-center justify-center gap-2 font-bold text-sm transition shadow-sm ${
-                              isRemovingBg 
-                                ? 'bg-slate-200 text-slate-500 cursor-wait' 
-                                : 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:shadow-md hover:opacity-90 active:scale-95'
-                            }`}
-                          >
-                            {isRemovingBg ? (
-                               <>
-                                 <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                 </svg>
-                                 Đang xử lý AI...
-                               </>
-                            ) : (
-                               <>✨ Xóa phông bằng AI (Miễn phí)</>
-                            )}
-                          </button>
-                          <p className="text-[10px] text-slate-400 mt-2 text-center">Xử lý 100% trên máy của bạn, không cần mạng, bảo mật tuyệt đối.</p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                     {renderInput('Chủ đề vinh danh', 'title')}
+                       <div className="flex items-center gap-3">
+                         <label className="text-xs w-16 text-slate-500">Sang ngang</label>
+                         <input type="range" min="-300" max="300" step="1" value={data.avatarOffsetX} 
+                           onChange={e => handleAvatarSetting('avatarOffsetX', parseFloat(e.target.value))} className="flex-1 accent-blue-600" />
+                         <button onClick={() => handleAvatarSetting('avatarOffsetX', 0)} className="text-xs text-blue-600 hover:underline w-8 text-right">Reset</button>
+                       </div>
+                       
+                       <div className="flex items-center gap-3">
+                         <label className="text-xs w-16 text-slate-500">Lên xuống</label>
+                         <input type="range" min="-300" max="300" step="1" value={data.avatarOffsetY} 
+                           onChange={e => handleAvatarSetting('avatarOffsetY', parseFloat(e.target.value))} className="flex-1 accent-blue-600" />
+                         <button onClick={() => handleAvatarSetting('avatarOffsetY', 0)} className="text-xs text-blue-600 hover:underline w-8 text-right">Reset</button>
+                       </div>
+
+                       <div className="mt-4 pt-4 border-t border-slate-200">
+                          {aiLoadingState === 'idle' ? (
+                             <button onClick={initAI} className="w-full py-2 px-3 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200 font-bold text-sm hover:bg-indigo-100 transition shadow-sm flex flex-col items-center justify-center gap-1">
+                                <span className="flex items-center gap-2">✨ Khởi tạo AI Xóa Nền</span>
+                                <span className="text-[10px] font-normal opacity-80">(Tải công cụ xử lý ~100MB lần đầu)</span>
+                             </button>
+                          ) : aiLoadingState === 'loading' ? (
+                             <div className="bg-slate-100 rounded-lg p-3 text-center border border-slate-200 shadow-inner">
+                                <p className="text-xs font-semibold text-slate-700 mb-2">{aiStatusMessage}</p>
+                                <div className="w-full bg-slate-300 rounded-full h-2 mb-2 overflow-hidden">
+                                   <div className="bg-indigo-600 h-full rounded-full transition-all duration-300" style={{ width: `${aiProgress}%` }}></div>
+                                </div>
+                                <p className="text-[10px] text-orange-600 font-medium">Vui lòng KHÔNG ĐÓNG trình duyệt lúc này...</p>
+                             </div>
+                          ) : (
+                             <button 
+                               onClick={handleAIBgRemoval} 
+                               disabled={isRemovingBg}
+                               className={`w-full py-2 px-3 rounded-lg flex items-center justify-center gap-2 font-bold text-sm transition shadow-sm ${
+                                 isRemovingBg 
+                                   ? 'bg-slate-200 text-slate-500 cursor-wait' 
+                                   : 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:shadow-md hover:opacity-90 active:scale-95'
+                               }`}
+                             >
+                               {isRemovingBg ? (
+                                  <>
+                                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Đang xử lý AI...
+                                  </>
+                               ) : (
+                                  <>✨ Xóa phông bằng AI (Đã sẵn sàng)</>
+                               )}
+                             </button>
+                          )}
+                          <p className="text-[10px] text-slate-400 mt-2 text-center">Xử lý 100% trên thiết bị của bạn, bảo mật tuyệt đối.</p>
+                       </div>
+                     </div>
+                   </div>
+                 )}
+                 {renderInput('Chủ đề vinh danh', 'title')}
                  {renderInput('Họ và tên học sinh', 'studentName', 'Ví dụ: NGUYỄN VĂN A')}
                  
                  <div className="grid grid-cols-2 gap-3">
@@ -848,7 +930,7 @@ export const CertificateBuilder: React.FC = () => {
                  </div>
 
                  {renderInput('Thành tích / Nội dung', 'achievement', '', true)}
-                   </div>
+                    </div>
                   </motion.div>
                  )}
                  </AnimatePresence>
