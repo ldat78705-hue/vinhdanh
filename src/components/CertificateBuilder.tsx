@@ -193,9 +193,8 @@ export const CertificateBuilder: React.FC = () => {
       setAiStatusMessage('Đang kết nối hệ thống AI...');
 
       _imglyConfig = {
-         publicPath: "https://unpkg.com/@imgly/background-removal-data@1.4.5/dist/",
          model: "medium", // Sử dụng model thông minh nhất (rmbg-1.4)
-         device: "wasm",  // Ép buộc dùng WebAssembly CPU để không gây sập WebGL trên điện thoại
+         device: "cpu",  // Ép buộc dùng WebAssembly CPU để không gây sập WebGL trên điện thoại
          progress: (key: string, current: number, total: number) => {
            if (key.includes('fetch')) {
              const p = Math.round((current / total) * 100);
