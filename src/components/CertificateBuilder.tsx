@@ -41,7 +41,14 @@ export const CertificateBuilder: React.FC = () => {
        if (fontsReady && dataReady) setIsAppReady(true);
     };
 
-    document.fonts.ready.then(() => {
+    const fontPromises = FONT_OPTIONS.map(opt => {
+       const family = opt.value.split(',')[0].replace(/"/g, '').trim();
+       if (family === 'sans-serif' || family === 'serif') return Promise.resolve();
+       // Force browser to fetch the font
+       return document.fonts.load(`10px "${family}"`).catch(e => console.warn('Font load warning:', family));
+    });
+
+    Promise.all([...fontPromises, document.fonts.ready]).then(() => {
        setFontsLoaded(true);
        fontsReady = true;
        checkReady();
