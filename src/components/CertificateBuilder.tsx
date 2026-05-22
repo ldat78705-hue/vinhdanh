@@ -32,9 +32,20 @@ export const CertificateBuilder: React.FC = () => {
   const [currentBatchIndex, setCurrentBatchIndex] = useState<number>(-1);
   const [showBatchModal, setShowBatchModal] = useState(false);
   const [batchInput, setBatchInput] = useState('');
+  const [isAppReady, setIsAppReady] = useState(false);
 
   useEffect(() => {
-    document.fonts.ready.then(() => setFontsLoaded(true));
+    let fontsReady = false;
+    let dataReady = false;
+    const checkReady = () => {
+       if (fontsReady && dataReady) setIsAppReady(true);
+    };
+
+    document.fonts.ready.then(() => {
+       setFontsLoaded(true);
+       fontsReady = true;
+       checkReady();
+    });
 
     const handlePaste = (e: ClipboardEvent) => {
       const items = e.clipboardData?.items;
@@ -114,8 +125,15 @@ export const CertificateBuilder: React.FC = () => {
       const docs = await getTemplates();
       setTemplates(docs);
       if (docs.length > 0) setSelectedTemplateId(docs[0].id);
+      
+      // Notify checkReady by setting state (though we can't directly call it here, we use a simple timeout approach or rely on fonts loaded)
+      // Actually we set a global flag or just set isAppReady(true) because fonts load async.
+      // Wait, since we moved dataReady logic, we just do it here.
     };
-    init();
+    init().then(() => {
+      // Delay slightly to ensure smooth transition
+      setTimeout(() => setIsAppReady(true), 500);
+    });
   }, []);
 
   // Update canvas on data or template change
@@ -607,6 +625,17 @@ export const CertificateBuilder: React.FC = () => {
       </div>
     );
   };
+
+  if (!isAppReady) {
+    return (
+      <div className="fixed inset-0 flex flex-col items-center justify-center bg-slate-50 z-[999]">
+         <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-6"></div>
+         <h2 className="text-2xl font-bold text-slate-800">Đang chuẩn bị không gian làm việc...</h2>
+         <p className="text-sm text-slate-500 mt-2 font-medium">Đang tải bộ {FONT_OPTIONS.length} phông chữ mỹ thuật và thiết kế mẫu</p>
+         <p className="text-xs text-slate-400 mt-1">(Quá trình này có thể mất vài giây trong lần truy cập đầu tiên)</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col lg:flex-row w-full lg:h-full text-slate-800 bg-slate-50">
