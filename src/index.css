@@ -6,3 +6,26 @@
   --font-display: "Space Grotesk", sans-serif;
   --font-serif: "Playfair Display", serif;
 }
+
+@font-face { font-family: 'FC Chomp'; src: url('/fonts/FC-Chomp.otf'); }
+@font-face { font-family: 'FC Coldwell Bridges'; src: url('/fonts/FC-Coldwell-Bridges.otf'); }
+@font-face { font-family: 'FC Daytonica'; src: url('/fonts/FC-Daytonica.otf'); }
+@font-face { font-family: 'FC Mikado Medium'; src: url('/fonts/FC-Mikado-Medium.otf'); }
+@font-face { font-family: 'HN Kaldista Project'; src: url('/fonts/HN-Kaldista-Project.ttf'); }
+@font-face { font-family: 'MTD Yolanda Princess'; src: url('/fonts/MTD-Yolanda-Princess.otf'); }
+@font-face { font-family: 'SFU Franklin Gothic Book'; src: url('/fonts/SFUFranklinGothicBook.TTF'); }
+@font-face { font-family: 'SFU Franklin Gothic Book Oblique'; src: url('/fonts/SFUFranklinGothicBookOblique.TTF'); }
+@font-face { font-family: 'SFU Franklin Gothic Demi'; src: url('/fonts/SFUFranklinGothicDemi.TTF'); }
+@font-face { font-family: 'SFU Franklin Gothic Demi Oblique'; src: url('/fonts/SFUFranklinGothicDemiOblique.TTF'); }
+@font-face { font-family: 'SFU Franklin Gothic Heavy'; src: url('/fonts/SFUFranklinGothicHeavy.TTF'); }
+@font-face { font-family: 'SVN Hottroof Semhesta'; src: url('/fonts/SVN-Hottroof-Semhesta.otf'); }
+@font-face { font-family: 'TQ Kingston'; src: url('/fonts/TQ-Kingston.ttf'); }
+@font-face { font-family: 'UTM Yves KT'; src: url('/fonts/UTM%20Yves%20KT.ttf'); }
+@font-face { font-family: 'UTM Yves KT Bold'; src: url('/fonts/UTM%20Yves%20KT_Bold.ttf'); }
+@font-face { font-family: 'UTM Yves KT Bold Italic'; src: url('/fonts/UTM%20Yves%20KT_Bold_Italic.ttf'); }
+@font-face { font-family: 'UTM Azkia'; src: url('/fonts/UTM-Azkia.ttf'); }
+@font-face { font-family: 'UTM Candlescript Pro'; src: url('/fonts/UTM-Candlescript-Pro.ttf'); }
+@font-face { font-family: 'UVN Ky Thuat'; src: url('/fonts/UVN-Ky-Thuat.ttf'); }
+@font-face { font-family: 'UVN Thang Vu'; src: url('/fonts/UVN-Thang-Vu.ttf'); }
+@font-face { font-family: 'UVN Thoi Dai 2'; src: url('/fonts/UVN-Thoi-Dai-2.ttf'); }
+@font-face { font-family: 'VNF Shelia Regular'; src: url('/fonts/VNF-Shelia-Regular.ttf'); }
