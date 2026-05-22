@@ -36,6 +36,28 @@ export const CertificateBuilder: React.FC = () => {
 
   useEffect(() => {
     document.fonts.ready.then(() => setFontsLoaded(true));
+
+    const handlePaste = (e: ClipboardEvent) => {
+      const items = e.clipboardData?.items;
+      if (!items) return;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf('image') !== -1) {
+          const file = items[i].getAsFile();
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+               if (ev.target?.result) {
+                  setData(prev => ({ ...prev, avatarDataUrl: ev.target!.result as string, removeAvatarBg: false }));
+               }
+            };
+            reader.readAsDataURL(file);
+          }
+          break;
+        }
+      }
+    };
+    window.addEventListener('paste', handlePaste);
+    return () => window.removeEventListener('paste', handlePaste);
   }, []);
 
   const [data, setData] = useState<CertificateData>({
@@ -177,7 +199,7 @@ export const CertificateBuilder: React.FC = () => {
       env.allowLocalModels = false;
       env.useBrowserCache = true;
 
-      _model = await AutoModel.from_pretrained('Xenova/modnet', {
+      _model = await AutoModel.from_pretrained('onnx-community/BiRefNet_lite-ONNX', {
         progress_callback: (data: any) => {
           if (data.status === 'progress') {
              setAiProgress(Math.round(data.progress));
@@ -191,7 +213,7 @@ export const CertificateBuilder: React.FC = () => {
       });
       
       setAiStatusMessage('Đang tải bộ tiền xử lý...');
-      _processor = await AutoProcessor.from_pretrained('Xenova/modnet');
+      _processor = await AutoProcessor.from_pretrained('onnx-community/BiRefNet_lite-ONNX');
       
       setAiLoadingState('ready');
     } catch (err) {
