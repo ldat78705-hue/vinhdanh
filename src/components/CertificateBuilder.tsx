@@ -161,10 +161,21 @@ export const CertificateBuilder: React.FC = () => {
     if (!data.avatarDataUrl) return;
     setIsRemovingBg(true);
     try {
-      const blob = await removeBackground(data.avatarDataUrl, {
-         model: 'small',
-         device: 'any',
-      });
+      let blob: Blob;
+      try {
+        blob = await removeBackground(data.avatarDataUrl, {
+           publicPath: "https://unpkg.com/@imgly/background-removal-data@1.4.5/dist/",
+           model: 'small',
+           device: 'any',
+        });
+      } catch (cdnErr) {
+        console.warn('Primary CDN failed, trying fallback...', cdnErr);
+        blob = await removeBackground(data.avatarDataUrl, {
+           publicPath: "https://esm.sh/@imgly/background-removal-data@1.4.5/dist/",
+           model: 'small',
+           device: 'any',
+        });
+      }
       const reader = new FileReader();
       reader.readAsDataURL(blob);
       reader.onloadend = () => {
