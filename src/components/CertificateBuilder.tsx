@@ -177,7 +177,7 @@ export const CertificateBuilder: React.FC = () => {
       };
     } catch(e) {
       console.error(e);
-      alert('Có lỗi xảy ra khi xóa nền (có thể do kết nối mạng yếu trên điện thoại). Vui lòng thử lại.');
+      alert('Tính năng xóa nền AI yêu cầu tải tệp xử lý đồ họa (~10MB) từ máy chủ. Lỗi này thường do mạng di động yếu hoặc trình duyệt của điện thoại không hỗ trợ WebGL/WASM.\n\nVui lòng thử lại với mạng Wifi ổn định hơn, hoặc sử dụng MÁY TÍNH để xóa nền mượt mà nhất!');
       setIsRemovingBg(false);
     }
   };
@@ -554,9 +554,11 @@ export const CertificateBuilder: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col-reverse lg:flex-row h-[100dvh] text-slate-800">
-       <div className="w-full md:w-80 lg:w-96 shrink-0 bg-white border-r border-slate-200 flex flex-col h-[45vh] lg:h-full z-20">
-          <div className="p-3 sm:p-6 pb-3 border-b border-slate-100 z-20 bg-white shrink-0">
+    <div className="flex flex-col lg:flex-row min-h-screen text-slate-800 bg-slate-50">
+       
+       {/* Left Sidebar - Controls */}
+       <div className="w-full lg:w-96 bg-white border-r border-slate-200 flex flex-col order-2 lg:order-1 lg:h-screen z-20">
+          <div className="p-3 sm:p-6 pb-3 border-b border-slate-100 z-20 bg-white sticky top-0 lg:relative">
                           <div className="flex items-center justify-between mb-2">
                <h2 className="text-xl font-bold text-slate-800">Tạo Chứng Nhận</h2>
                <button onClick={() => setShowBatchModal(true)} className="flex items-center gap-1 text-xs bg-green-50 text-green-700 px-2 py-1 rounded border border-green-200 hover:bg-green-100 transition">
@@ -572,7 +574,7 @@ export const CertificateBuilder: React.FC = () => {
              )}
           </div>
           
-          <div className="p-4 sm:p-6 overflow-y-auto custom-scrollbar flex-1 relative">
+          <div className="p-4 sm:p-6 overflow-y-auto custom-scrollbar flex-1 relative lg:h-0">
              <div className="space-y-4">
                {/* Section 1: Template */}
                <section className="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-sm transition-all duration-300">
@@ -858,7 +860,7 @@ export const CertificateBuilder: React.FC = () => {
        </div>
 
        {/* Right sidebar - Live Preview */}
-       <div className="flex-1 bg-slate-100 flex flex-col p-2 sm:p-4 md:p-8 relative h-[55vh] lg:h-full overflow-hidden">
+       <div className="w-full lg:flex-1 bg-slate-100 flex flex-col p-2 sm:p-4 md:p-8 relative h-[35vh] min-h-[280px] lg:h-screen lg:min-h-0 overflow-hidden order-1 lg:order-2 sticky top-0 z-30 border-b border-slate-200 lg:border-b-0 lg:shadow-none shadow-md">
            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 sm:mb-6 shrink-0 gap-2 sm:gap-4">
              <div className="hidden sm:block">
                 <h2 className="text-lg md:text-2xl font-bold text-slate-800">Live Preview</h2>
