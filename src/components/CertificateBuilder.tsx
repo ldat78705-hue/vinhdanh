@@ -846,7 +846,9 @@ export const CertificateBuilder: React.FC = () => {
 
                  {renderInput('Thành tích / Nội dung', 'achievement', '', true)}
                    </div>
+                  </motion.div>
                  )}
+                 </AnimatePresence>
                </section>
             </div>
           </div>
